@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Pathfinding & Sorting Visualizer</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #1f4037;
+        }
+
+        .profile-info {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #fff;
+            background-color: #1f4037;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #99f2c8;
+        }
+
+        #updateForm {
+            margin-top: 20px;
+            display: none;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #updateForm input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        #updateForm button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1f4037;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #updateForm button:hover {
+            background-color: #99f2c8;
+        }
+
+        .logout-btn {
+            background-color: #e57373;
+        }
+
+        .logout-btn:hover {
+            background-color: #f44336;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+
+        <div id="userProfile" class="profile-info">
+            <!-- User data will be dynamically displayed here -->
+        </div>
+
+        <!-- Button to show update form -->
+        <button id="showUpdateFormBtn" class="btn">Update Profile</button>
+
+        <!-- Update Profile Form (Initially hidden) -->
+        <div id="updateForm">
+            <input type="text" id="updateName" placeholder="Update Name"><br>
+            <input type="text" id="updateAge" placeholder="Update Age"><br>
+            <input type="text" id="updateLocation" placeholder="Update Location"><br>
+            <button id="updateProfileBtn" class="btn">Update Profile</button>
+        </div>
+
+        <!-- Logout Button -->
+        <button id="logoutBtn" class="btn logout-btn">Logout</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Fetch user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData'));
+
+            if (!userData) {
+                // Redirect to signup page if no user data is found
+                window.location.href = "signup.html";
+                return;
+            }
+
+            // Display user information on profile page
+            const userProfileDiv = document.getElementById("userProfile");
+            userProfileDiv.innerHTML = `
+                <p><strong>Username:</strong> ${userData.username}</p>
+                <p><strong>Email:</strong> ${userData.email}</p>
+                <p><strong>Registration Date:</strong> ${userData.registrationDate}</p>
+                <p><strong>Age:</strong> ${userData.age || 'Not Set'}</p>
+                <p><strong>Location:</strong> ${userData.location || 'Not Set'}</p>
+                <p><strong>Quiz Score:</strong> ${userData.score !== undefined ? userData.score : 'Not Taken'}</p>
+            `;
+
+            // Event listeners
+            document.getElementById('showUpdateFormBtn').addEventListener('click', showUpdateForm);
+            document.getElementById('updateProfileBtn').addEventListener('click', updateProfile);
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+        };
+
+        // Show update form
+        function showUpdateForm() {
+            document.getElementById('updateForm').style.display = 'block';
+        }
+
+        // Update profile data
+        function updateProfile(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            const updatedName = document.getElementById('updateName').value;
+            const updatedAge = document.getElementById('updateAge').value;
+            const updatedLocation = document.getElementById('updateLocation').value;
+
+            // Fetch existing user data
+            let userData = JSON.parse(localStorage.getItem('userData'));
+
+            // Update the profile fields with new data
+            if (updatedName) userData.username = updatedName;
+            if (updatedAge) userData.age = updatedAge;
+            if (updatedLocation) userData.location = updatedLocation;
+
+            // Save updated data to localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            // Reload the page to show updated data
+            window.location.reload();
+        }
+
+        // Logout function
+        function logout() { // Remove user data from localStorage
+            window.location.href = "index.html"; // Redirect to signup page
+        }
+    </script>
+</body>
+</html>

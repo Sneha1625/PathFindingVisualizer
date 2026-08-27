@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pathfinding & Sorting Visualizer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      color: white;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: white;
+      color: black;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ccc;
+    }
+
+    .login-form {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .success {
+      background-color: #00c853;
+      color: white;
+    }
+
+    .error {
+      background-color: #d50000;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Pathfinding & Sorting Visualizer</h1>
+    <p>Explore BFS, DFS, Dijkstra, A*, Merge Sort, Quick Sort and more!</p>
+
+    <div class="button-container">
+      <button onclick="showLoginForm()">Login</button>
+      <button onclick="loginToProfile()">Login to Your Profile</button>
+    </div>
+
+    <div class="login-form" id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button onclick="login()">Submit</button>
+    </div>
+
+    <div class="message" id="loginMessage"></div>
+  </div>
+
+  <script>
+    function showLoginForm() {
+      document.getElementById('loginForm').style.display = 'flex';
+    }
+
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const messageBox = document.getElementById('loginMessage');
+
+      const storedData = JSON.parse(localStorage.getItem('userData'));
+
+      if (!username || !password) {
+        messageBox.textContent = "Please enter both username and password.";
+        messageBox.className = "message error";
+        messageBox.style.display = "block";
+        return;
+      }
+
+      if (storedData && username === storedData.username && password === storedData.password) {
+        localStorage.setItem('username', storedData.username);
+        localStorage.setItem('email', storedData.email);
+
+        messageBox.textContent = "Login successful! Redirecting to profile...";
+        messageBox.className = "message success";
+        messageBox.style.display = "block";
+
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 1500);
+      } else {
+        messageBox.textContent = "Incorrect username or password.";
+        messageBox.className = "message error";
+        messageBox.style.display = "block";
+      }
+    }
+
+    function loginToProfile() {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+
+      if (userData && userData.username) {
+        window.location.href = 'profile.html';
+      } else {
+        window.location.href = 'signup.html';
+      }
+    }
+  </script>
+</body>
+</html>

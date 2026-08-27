@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .signup-container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #ffffff;
+      color: #1f4037;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #e6e6e6;
+    }
+
+    .login-link, .guest-link {
+      margin-top: 15px;
+      display: inline-block;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: color 0.3s ease;
+    }
+
+    .login-link {
+      color: #ffffff;
+    }
+
+    .login-link:hover {
+      color: #cfcfcf;
+    }
+
+    .guest-link {
+      color: #ffffff;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .guest-link:hover {
+      color: #b2dfdb;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .success {
+      background-color: #00c853;
+    }
+
+    .error {
+      background-color: #d50000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>Create Your Account</h2>
+    <input type="email" id="email" placeholder="Email ID" required>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button class="btn" onclick="createAccount()">Create Account</button>
+
+    <div class="message" id="messageBox"></div>
+
+    <span class="login-link" onclick="goToLanding()">Already have an account?</span>
+    <span class="guest-link" onclick="continueAsGuest()">Continue as Guest</span>
+  </div>
+
+  <script>
+    function createAccount() {
+      const email = document.getElementById("email").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const messageBox = document.getElementById("messageBox");
+
+      if (!email || !username || !password) {
+        messageBox.textContent = "Please fill in all the details.";
+        messageBox.className = "message error";
+        messageBox.style.display = "block";
+        return;
+      }
+
+      const userData = {
+        email,
+        username,
+        password,
+        registrationDate: new Date().toLocaleDateString()
+      };
+
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      messageBox.textContent = "Account created successfully! Redirecting...";
+      messageBox.className = "message success";
+      messageBox.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "landing.html";
+      }, 2000);
+    }
+
+    function goToLanding() {
+      window.location.href = "landing.html";
+    }
+
+    function continueAsGuest() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

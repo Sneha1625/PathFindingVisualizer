@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizer Home</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(to right, #1f1c2c, #928dab);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .start-btn {
+            background-color: #ffffff;
+            color: #1f1c2c;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            background-color: #eee;
+        }
+
+        @media (max-width: 600px) {
+            .logo {
+                width: 140px;
+                height: 140px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Replace "your-logo.png" with your actual logo file -->
+    <img src="logo.jpg" alt="Logo" class="logo">
+
+    <h1>Welcome to Your Visualizer</h1>
+    <p>Start exploring algorithms like BFS, DFS, A*, Merge Sort and more with our interactive visualizer.</p>
+    
+    <button class="start-btn" onclick="start()">Start Visualizing</button>
+
+    <script>
+        function start() {
+            window.location.href = 'signup.html'; // Go to sign-up page first
+        }
+    </script>
+
+</body>
+</html>
