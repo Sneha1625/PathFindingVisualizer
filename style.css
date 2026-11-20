@@ -586,3 +586,55 @@ body.sorting {
   margin: 10px;
   padding: 0;
 }
+
+
+/* Weighted pathfinding extension */
+.weighted-panel {
+  width: min(1100px, 96%);
+  margin: 22px auto 36px;
+  padding: 22px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #dbe3ef;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(25, 45, 75, .08);
+}
+.weighted-heading, .weighted-controls, .weighted-actions, .terrain-tools, .terrain-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.weighted-heading { justify-content: space-between; }
+.weighted-heading h2 { margin: 0 0 5px; color: #172b4d; }
+.weighted-heading p, .weighted-note { margin: 0; color: #64748b; font-size: 14px; }
+.terrain-legend { font-size: 13px; color: #475569; }
+.terrain-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 13px; height: 13px; border: 1px solid #b8c2d1; border-radius: 3px; display: inline-block; }
+.normal-swatch { background: #fff; }
+.mud-swatch { background: #d6a45c; }
+.water-swatch { background: #62c5df; }
+.weighted-controls { justify-content: space-between; margin-top: 18px; }
+.terrain-button {
+  border: 1px solid #cbd5e1; border-radius: 9px; padding: 10px 14px;
+  background: #f8fafc; color: #26364b; cursor: pointer; font-weight: 600;
+}
+.terrain-button:hover, .terrain-button.terrain-selected { border-color: #2563eb; background: #eaf2ff; color: #174ea6; }
+.weighted-actions { gap: 8px; }
+.weighted-run { background: #176b55; }
+.weighted-run:hover { background: #10543f; }
+.weighted-clear { background: #64748b; }
+.weighted-status { min-height: 20px; color: #334155; font-size: 14px; margin: 16px 0 10px; }
+.weighted-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.stat-card { padding: 13px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; flex-direction: column; gap: 7px; }
+.stat-card span { color: #64748b; font-size: 12px; }
+.stat-card strong { color: #172b4d; font-size: 21px; }
+.weighted-note { margin-top: 14px; line-height: 1.5; }
+.tile[data-weight="5"], .tile[data-weight="10"] { font-size: 11px; font-weight: 700; color: #26364b; display: flex; align-items: center; justify-content: center; }
+@media (max-width: 760px) {
+  .weighted-panel { padding: 14px; }
+  .weighted-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .weighted-controls { align-items: flex-start; }
+  .weighted-actions { width: 100%; }
+  .weighted-actions .alg-buttons { flex: 1; padding: 10px 12px; }
+}
