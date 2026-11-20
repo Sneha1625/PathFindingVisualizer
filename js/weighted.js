@@ -109,6 +109,19 @@
     selectedColor = "";
     updateTileNeighbors();
     if (typeof resetVisitedTiles === "function") resetVisitedTiles();
+    // Remove colors left by a previous run while preserving terrain and walls.
+    tiles.forEach(tile => {
+      if (tile.number === startTile) {
+        tile.element.style.backgroundColor = "#008000";
+      } else if (tile.number === endTile) {
+        tile.element.style.backgroundColor = "#ff0000";
+      } else if (tile.isTileWall()) {
+        tile.element.style.backgroundColor = "#000000";
+      } else {
+        tile.element.style.backgroundColor = tile.weight === 5 ? COLORS.mud :
+          tile.weight === 10 ? COLORS.water : COLORS.normal;
+      }
+    });
     resetOn = false;
 
     const startedAt = performance.now();
