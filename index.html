@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Tile Grid</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pathfinding Visualizer</title>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body class="path">
@@ -63,23 +65,47 @@
 					</div>
 				</div>
 				<div class="sorting-button">
-					<button class="alg-buttons">
-						<a href="sorting.html" style="color: inherit; text-decoration: none;">Sorting Algorithm Visualizer</a>
-					</button>
+					<button class="alg-buttons"><a href="sorting.html" style="color: inherit; text-decoration: none;">Sorting Algorithm Visualizer</a></button>
 				</div>
-
-				<!-- ✅ Fast Play Quiz Button -->
-				<div class="quiz-button">
-					<button class="alg-buttons" onclick="window.location.href='quiz.html'">Play Quiz</button>
-				</div>
-
-				<!-- ✅ Algorithms Button -->
-				<div class="algorithms-button">
-					<button class="alg-buttons" onclick="window.location.href='algorithms1.html'">Algorithms</button>
-				</div>
+				<div class="quiz-button"><button class="alg-buttons" onclick="window.location.href='quiz.html'">Play Quiz</button></div>
+				<div class="algorithms-button"><button class="alg-buttons" onclick="window.location.href='algorithms1.html'">Algorithms</button></div>
 			</div>
 		</div>
 	</div>
+
+	<section class="weighted-panel" aria-labelledby="weighted-heading">
+		<div class="weighted-heading">
+			<div>
+				<h2 id="weighted-heading">Weighted Terrain Mode</h2>
+				<p>Paint different movement costs, then compare the shortest weighted routes.</p>
+			</div>
+			<div class="terrain-legend">
+				<span><i class="legend-swatch normal-swatch"></i>Normal · 1</span>
+				<span><i class="legend-swatch mud-swatch"></i>Mud · 5</span>
+				<span><i class="legend-swatch water-swatch"></i>Water · 10</span>
+			</div>
+		</div>
+		<div class="weighted-controls">
+			<div class="terrain-tools" aria-label="Terrain brush">
+				<button class="terrain-button terrain-selected" data-terrain="normal" aria-pressed="true">Normal (1)</button>
+				<button class="terrain-button" data-terrain="mud" aria-pressed="false">Mud (5)</button>
+				<button class="terrain-button" data-terrain="water" aria-pressed="false">Water (10)</button>
+			</div>
+			<div class="weighted-actions">
+				<button class="alg-buttons weighted-run" id="run-weighted-dijkstra">Run Dijkstra</button>
+				<button class="alg-buttons weighted-run" id="run-weighted-astar">Run A*</button>
+				<button class="alg-buttons weighted-clear" id="clear-terrain">Clear Weights</button>
+			</div>
+		</div>
+		<p class="weighted-status" id="weighted-status" role="status">Choose terrain, then run a weighted algorithm.</p>
+		<div class="weighted-stats" aria-live="polite">
+			<div class="stat-card"><span>Nodes explored</span><strong id="stat-explored">—</strong></div>
+			<div class="stat-card"><span>Path steps</span><strong id="stat-steps">—</strong></div>
+			<div class="stat-card"><span>Total path cost</span><strong id="stat-cost">—</strong></div>
+			<div class="stat-card"><span>Execution time</span><strong id="stat-time">—</strong></div>
+		</div>
+		<p class="weighted-note">BFS and DFS remain unweighted demonstrations. Weighted terrain is evaluated by the dedicated Dijkstra and A* controls above.</p>
+	</section>
 
 	<div class="info" id="info">
 		<div class="page1">
@@ -89,81 +115,33 @@
 			</div>
 			<div class="info-body">
 				<div class="info-body-text">
-					<div class="start-info">
-						<div class="info-sub-text">
-							To set the starting point, click on the Start Tile button and then click on any tile
-						</div>
-						<button class="tilebut1">Start Tile</button>
-					</div>
-					<div class="end-info">
-						<div class="info-sub-text">
-							To set the ending point, click on the End Tile button and then click on any tile
-						</div>
-						<button class="tilebut2">End Tile</button>
-					</div>
-					<div class="wall-info">
-						<div class="info-sub-text">
-							To set the walls, click on the Wall Tile button and then click or drag on any tile
-						</div>
-						<button class="tilebut3">Wall Tile</button>
-					</div>
-					<div class="start-alg-info">
-						Click any of the algorithms to visualize how they work
-					</div>
+					<div class="start-info"><div class="info-sub-text">To set the starting point, click on the Start Tile button and then click on any tile</div><button class="tilebut1">Start Tile</button></div>
+					<div class="end-info"><div class="info-sub-text">To set the ending point, click on the End Tile button and then click on any tile</div><button class="tilebut2">End Tile</button></div>
+					<div class="wall-info"><div class="info-sub-text">To set the walls, click on the Wall Tile button and then click or drag on any tile</div><button class="tilebut3">Wall Tile</button></div>
+					<div class="start-alg-info">Click any of the algorithms to visualize how they work</div>
 				</div>
 				<div class="right-side-container">
-					<div class="part1-gif-container">
-						<img class="part1-gif" src="videos/part1.gif" alt="animated GIF">
-					</div>
-					<div class="info-footer-page2">
-						<button class="alg-buttons" onclick="togglePages()">Advanced Features --></button>
-					</div>
+					<div class="part1-gif-container"><img class="part1-gif" src="videos/part1.gif" alt="Pathfinding controls demonstration"></div>
+					<div class="info-footer-page2"><button class="alg-buttons" onclick="togglePages()">Advanced Features --&gt;</button></div>
 				</div>
 			</div>
 		</div>
 		<div class="page2" id="advanced-info" style="display: none;">
-			<div class="info-header">
-				<div class="info-title">Advanced Features</div>
-				<button data-close-button class="close-button">&times;</button>
-			</div>
+			<div class="info-header"><div class="info-title">Advanced Features</div><button data-close-button class="close-button">&times;</button></div>
 			<div class="info-body">
 				<div class="info-body-text-page2">
-					<div class="drag-info">
-						<div class="info-sub-text">
-							After running an algorithm, you can visualize it from various angles by dragging the start or end positions
-						</div>
-					</div>
-					<div class="maze-info">
-						<div class="info-sub-text">
-							Click the Create Maze button to create a random maze using the Depth First Search algorithm
-						</div>
-						<button class="alg-buttons">Create Maze</button>
-					</div>
-					<div class="random-info">
-						<div class="info-sub-text">
-							Click or drag the Random Tilemap Slider to set a random tilemap with a lower or higher ratio of walls
-						</div>
-						<div class="input-container">
-							<div class="text-slider">
-								<label for="mySlider">Random Tilemap</label>
-							</div>
-							<div class="slider-container">
-								<input class="range-style" type="range" min="0.1" max="0.25" step="0.01" value="0.175" id="mySlider">
-							</div>
-						</div>
-					</div>
+					<div class="drag-info"><div class="info-sub-text">After running an algorithm, drag the start or end positions to explore different routes.</div></div>
+					<div class="maze-info"><div class="info-sub-text">Click Create Maze to generate a random maze using depth-first search backtracking.</div><button class="alg-buttons">Create Maze</button></div>
+					<div class="random-info"><div class="info-sub-text">Use the Random Tilemap slider to change the wall density.</div><div class="input-container"><div class="text-slider"><label for="mySlider">Random Tilemap</label></div><div class="slider-container"><input class="range-style" type="range" min="0.1" max="0.25" step="0.01" value="0.175" id="mySlider"></div></div></div>
 				</div>
-				<div class="right-side-container">
-					<img class="part2-gif" src="videos/part2.gif" alt="animated GIF">
-				</div>
+				<div class="right-side-container"><img class="part2-gif" src="videos/part2.gif" alt="Advanced pathfinding demonstration"></div>
 			</div>
-			<div class="info-footer-page1">
-				<button class="alg-buttons" onclick="resetPages()"><-- How to Use</button>
-			</div>
+			<div class="info-footer-page1"><button class="alg-buttons" onclick="resetPages()">&lt;-- How to Use</button></div>
 		</div>
 	</div>
 	<div id="overlay"></div>
 
 	<script src="js/index.js"></script>
+	<script src="js/weighted.js"></script>
 </body>
 </html>
